@@ -60,6 +60,6 @@ io.on("connection", (client) => {
   });
 });
 
-server.listen(3333, () => {
-  console.log("listening on *:3333");
+server.listen(process.env.PORT, () => {
+  console.log(process.env.PORT);
 });
