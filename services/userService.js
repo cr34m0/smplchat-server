@@ -1,5 +1,6 @@
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const link = process.env.JSON_SRV;
 
 const doRequest = async (method, url, body = "") => {
   return await fetch(url, {
@@ -20,7 +21,7 @@ const doRequest = async (method, url, body = "") => {
 const addUser = async (uid, login) => {
   return await doRequest(
     "post",
-    "http://localhost:3000/users",
+    `${link}users`,
     JSON.stringify({ login, id: uid })
   )
     .then((res) => {
@@ -35,7 +36,7 @@ const addUser = async (uid, login) => {
 };
 
 const removeUser = async (uid) => {
-  return await doRequest("delete", `http://localhost:3000/users/${uid}`)
+  return await doRequest("delete", `${link}users/${uid}`)
     .then((res) => {
       return {
         status: "ok",
@@ -48,7 +49,7 @@ const removeUser = async (uid) => {
 };
 
 const getLogged = async () => {
-  return await doRequest("get", `http://localhost:3000/users`)
+  return await doRequest("get", `${link}users`)
     .then((res) => {
       return res.text();
     })
@@ -60,7 +61,7 @@ const getLogged = async () => {
 const saveMessage = async (login, message, uid) => {
   return await doRequest(
     "post",
-    `http://localhost:3000/messages`,
+    `${link}messages`,
     JSON.stringify({ login, message, uid })
   )
     .then((res) => {
@@ -75,7 +76,7 @@ const saveMessage = async (login, message, uid) => {
 };
 
 const getMessages = async () => {
-  return await doRequest("get", `http://localhost:3000/messages`)
+  return await doRequest("get", `${link}messages`)
     .then((res) => {
       return res.text();
     })
